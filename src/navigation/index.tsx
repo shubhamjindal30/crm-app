@@ -7,18 +7,13 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ColorSchemeName } from 'react-native';
 
-import ModalScreen from '../screens/ModalScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
-import WelcomeScreen from '../screens/WelcomeScreen';
-import RegionListScreen from '../screens/RegionListScreen';
+import { ModalScreen, NotFoundScreen, RegionListScreen, UserListScreen, WelcomeScreen } from '../screens';
 import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationContainer linking={LinkingConfiguration} theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
   );
@@ -34,7 +29,12 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="RegionListScreen" component={RegionListScreen} options={{ headerShown: true, title: 'Regions' }} />
+      <Stack.Screen
+        name="RegionListScreen"
+        component={RegionListScreen}
+        options={{ headerShown: true, title: 'Regions' }}
+      />
+      <Stack.Screen name="UserListScreen" component={UserListScreen} options={{ headerShown: true, title: 'Users' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />

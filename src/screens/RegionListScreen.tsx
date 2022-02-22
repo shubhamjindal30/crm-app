@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 import { Theme } from '../constants';
-
 import { View, Button } from '../components';
+import { RootStackScreenProps } from '../types';
 
 const REGION_LIST = [
   {
@@ -27,11 +27,21 @@ const REGION_LIST = [
   }
 ];
 
-const RegionListScreen = () => {
+const RegionListScreen = ({ navigation }: RootStackScreenProps<'RegionListScreen'>) => {
   return (
     <View style={styles.container}>
       {REGION_LIST.map((region, index) => (
-        <Button style={styles.regionBtn} key={`${region.id}-${index}`} mode="contained" color={Theme.colors.secondary} onPress={() => {}}>
+        <Button
+          style={styles.regionBtn}
+          key={`${region.id}-${index}`}
+          mode="contained"
+          color={Theme.colors.secondary}
+          onPress={() =>
+            navigation.navigate('UserListScreen', {
+              regionId: region.id
+            })
+          }
+        >
           {region.name}
         </Button>
       ))}
@@ -40,7 +50,7 @@ const RegionListScreen = () => {
       </Button>
     </View>
   );
-}
+};
 
 export default RegionListScreen;
 
