@@ -1,4 +1,4 @@
 import Button from './custom/Button';
-import { Text, View } from './Themed';
+import { Text, View, ScrollView } from './Themed';
 
-export { Button, Text, View };
+export { Button, Text, View, ScrollView };
