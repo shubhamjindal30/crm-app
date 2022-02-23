@@ -15,7 +15,7 @@ const USER_LIST = Array.from({ length: 20 }, (_, i) => {
   };
 });
 
-const UserListScreen = ({}: RootStackScreenProps<'UserListScreen'>) => {
+const UserListScreen = ({ navigation }: RootStackScreenProps<'UserListScreen'>) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {USER_LIST.map((user, index) => (
@@ -23,7 +23,7 @@ const UserListScreen = ({}: RootStackScreenProps<'UserListScreen'>) => {
           key={`${user.id}-${index}`}
           underlayColor={Theme.colors.white}
           style={styles.touchable}
-          onPress={() => {}}
+          onPress={() => navigation.navigate('UserDetailsScreen', { userId: user.id })}
         >
           <Card
             style={[
