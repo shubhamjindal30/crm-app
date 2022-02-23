@@ -1,7 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableHighlight } from 'react-native';
+import { Card, Title, Paragraph } from 'react-native-paper';
 
 import { Theme } from '../constants';
-import { ScrollView, Button } from '../components';
+import { ScrollView } from '../components';
 import { RootStackScreenProps } from '../types';
 
 const USER_LIST = Array.from({ length: 20 }, (_, i) => {
@@ -18,15 +19,26 @@ const UserListScreen = ({}: RootStackScreenProps<'UserListScreen'>) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {USER_LIST.map((user, index) => (
-        <Button
-          style={styles.userBtn}
+        <TouchableHighlight
           key={`${user.id}-${index}`}
-          mode="contained"
-          color={user.isActive ? Theme.colors.secondary : Theme.colors.darkGrey}
+          underlayColor={Theme.colors.white}
+          style={styles.touchable}
           onPress={() => {}}
         >
-          {user.firstName} {user.lastName}
-        </Button>
+          <Card
+            style={[
+              styles.userCard,
+              {
+                backgroundColor: user.isActive ? Theme.colors.secondary : Theme.colors.darkGrey
+              }
+            ]}
+          >
+            <Card.Content>
+              <Title style={styles.text}>{`${user.firstName} ${user.lastName}`}</Title>
+              <Paragraph style={styles.text}>status: {user.isActive ? 'active' : 'inactive'}</Paragraph>
+            </Card.Content>
+          </Card>
+        </TouchableHighlight>
       ))}
     </ScrollView>
   );
@@ -40,8 +52,18 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
     paddingTop: 30
   },
-  userBtn: {
+  touchable: {
     width: '80%',
-    marginTop: 20
+    marginTop: 20,
+    borderRadius: 15
+  },
+  userCard: {
+    width: '100%',
+    justifyContent: 'center',
+    paddingLeft: 10,
+    borderRadius: 15
+  },
+  text: {
+    color: Theme.colors.white
   }
 });
