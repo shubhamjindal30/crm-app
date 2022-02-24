@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ColorSchemeName } from 'react-native';
 
 import {
+  EditUserScreen,
   ModalScreen,
   NotFoundScreen,
   RegionListScreen,
@@ -46,6 +47,11 @@ const RootNavigator = () => {
         name="UserDetailsScreen"
         component={UserDetailsScreen}
         options={{ headerShown: true, title: 'User Details' }}
+      />
+      <Stack.Screen
+        name="EditUserScreen"
+        component={EditUserScreen}
+        options={{ headerShown: true, title: '' }}
       />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>

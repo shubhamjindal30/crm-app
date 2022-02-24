@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { ScrollView, Text } from '../components';
+import { Button, ScrollView, Text } from '../components';
 import { RootStackScreenProps } from '../types';
 
 const USER = {
@@ -14,13 +14,16 @@ const USER = {
   isActive: true
 };
 
-const UserDetailsScreen = ({}: RootStackScreenProps<'UserDetailsScreen'>) => {
+const UserDetailsScreen = ({ navigation }: RootStackScreenProps<'UserDetailsScreen'>) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text>First Name: {USER.firstName}</Text>
       <Text>Last Name: {USER.lastName}</Text>
       <Text>Region: {USER.region.name}</Text>
       <Text>Status: {USER.isActive ? 'Active' : 'Inactive'}</Text>
+      <Button mode="contained" onPress={() => navigation.navigate('EditUserScreen', { userId: USER.id })}>
+        Edit User
+      </Button>
     </ScrollView>
   );
 };
@@ -32,5 +35,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 60,
     paddingTop: 30
-  },
+  }
 });

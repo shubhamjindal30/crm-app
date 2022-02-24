@@ -16,6 +16,7 @@ export type RootStackParamList = {
   RegionListScreen: undefined;
   UserListScreen: { regionId?: string } | undefined;
   UserDetailsScreen: { userId?: string } | undefined;
+  EditUserScreen: { userId?: string } | undefined;
   Modal: undefined;
   NotFound: undefined;
 };
