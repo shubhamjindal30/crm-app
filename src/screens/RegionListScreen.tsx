@@ -1,36 +1,25 @@
+import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Theme } from '../constants';
 import { View, Button } from '../components';
 import { RootStackScreenProps } from '../types';
-
-const REGION_LIST = [
-  {
-    id: '1',
-    name: 'North West'
-  },
-  {
-    id: '2',
-    name: 'Mid West'
-  },
-  {
-    id: '3',
-    name: 'North East'
-  },
-  {
-    id: '4',
-    name: 'South East'
-  },
-  {
-    id: '5',
-    name: 'South West'
-  }
-];
+import { getRegions } from '../features/region/actions';
+import { RootState } from '../store';
 
 const RegionListScreen = ({ navigation }: RootStackScreenProps<'RegionListScreen'>) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getRegions());
+  }, []);
+
+  const regions = useSelector((state: RootState) => state.region.regions);
+
   return (
     <View style={styles.container}>
-      {REGION_LIST.map((region, index) => (
+      {regions.map((region, index) => (
         <Button
           style={styles.regionBtn}
           key={`${region.id}-${index}`}

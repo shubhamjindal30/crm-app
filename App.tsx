@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider } from 'react-redux';
 
 import useCachedResources from './src/hooks/useCachedResources';
 import useColorScheme from './src/hooks/useColorScheme';
 import Navigation from './src/navigation';
 import { Theme } from './src/constants';
+import store from './src/store';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -15,12 +17,14 @@ export default function App() {
     return null;
   } else {
     return (
-      <PaperProvider theme={Theme}>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
-      </PaperProvider>
+      <Provider store={store}>
+        <PaperProvider theme={Theme}>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </SafeAreaProvider>
+        </PaperProvider>
+      </Provider>
     );
   }
 }
