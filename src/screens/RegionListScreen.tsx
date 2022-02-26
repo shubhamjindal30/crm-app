@@ -1,20 +1,12 @@
-import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Theme } from '../constants';
 import { View, Button } from '../components';
 import { RootStackScreenProps } from '../types';
-import { getRegions } from '../features/region/actions';
 import { RootState } from '../store';
 
 const RegionListScreen = ({ navigation }: RootStackScreenProps<'RegionListScreen'>) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getRegions());
-  }, []);
-
   const regions = useSelector((state: RootState) => state.region.regions);
 
   return (

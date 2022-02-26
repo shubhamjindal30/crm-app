@@ -6,11 +6,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text, View, Button } from '../components';
 import { RootStackScreenProps } from '../types';
 import { getCustomers } from '../features/customer/actions';
+import { getRegions } from '../features/region/actions';
 
 const WelcomeScreen = ({ navigation }: RootStackScreenProps<'WelcomeScreen'>) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getRegions());
     dispatch(getCustomers());
   }, []);
 
