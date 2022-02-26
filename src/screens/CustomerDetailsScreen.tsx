@@ -1,8 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { useEffect } from 'react';
+import { StyleSheet, Button as DefaultButton } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../store';
-import { Button, ScrollView, Text } from '../components';
+import { ScrollView, Text } from '../components';
 import { RootStackScreenProps } from '../types';
 
 const CustomerDetailsScreen = ({ navigation, route }: RootStackScreenProps<'CustomerDetailsScreen'>) => {
@@ -16,6 +17,14 @@ const CustomerDetailsScreen = ({ navigation, route }: RootStackScreenProps<'Cust
     ? useSelector((state: RootState) => state.region.regions.find((x) => x.id === customer.region))
     : null;
 
+  const handleSave = () => navigation.navigate('EditCustomerScreen', { customerId: customerId || '' });
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <DefaultButton title="Edit" onPress={handleSave} />
+    });
+  }, [handleSave]);
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {customer ? (
@@ -24,9 +33,6 @@ const CustomerDetailsScreen = ({ navigation, route }: RootStackScreenProps<'Cust
           <Text>Last Name: {customer.lastName}</Text>
           <Text>Region: {region ? region.name : ''}</Text>
           <Text>Status: {customer.isActive ? 'Active' : 'Inactive'}</Text>
-          <Button mode="contained" onPress={() => navigation.navigate('EditCustomerScreen', { customerId: customer.id })}>
-            Edit Customer
-          </Button>
         </>
       ) : (
         <Text>Customer not found!</Text>
