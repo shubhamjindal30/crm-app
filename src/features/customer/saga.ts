@@ -23,14 +23,16 @@ function* handleSaveCustomer(action: SaveCustomerAction) {
     const response: { data: Customer[] | null } = yield call(saveCustomer, customer);
     const { data } = response;
     if (data) {
-      yield call(
-        schedulePushNotification,
-        'Contact Customer',
-        `Don't forget to contact ${customer.firstName} ${customer.lastName}!`,
-        5
-      );
       yield put(setCustomers(data));
-      Alert.alert('Success', `Customer ${customer.firstName} ${customer.lastName} successfully created!`);
+      if (!customer.id) {
+        yield call(
+          schedulePushNotification,
+          'Contact Customer',
+          `Don't forget to contact ${customer.firstName} ${customer.lastName}!`,
+          5
+        );
+        Alert.alert('Success', `Customer ${customer.firstName} ${customer.lastName} successfully created!`);
+      }
     }
   } catch (error) {
     console.log(`Error in handleSaveCustomer: ${error}`);
