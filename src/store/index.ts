@@ -4,9 +4,11 @@ import createSagaMiddleware from 'redux-saga';
 
 import { watcherSaga } from './rootSaga';
 import regionReducer from '../features/region/reducer';
+import customerReducer from '../features/customer/reducer';
 
 const rootReducer = combineReducers({
-  region: regionReducer
+  region: regionReducer,
+  customer: customerReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

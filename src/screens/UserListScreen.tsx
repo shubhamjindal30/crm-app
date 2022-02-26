@@ -1,45 +1,47 @@
 import { StyleSheet, TouchableHighlight } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 
 import { Theme } from '../constants';
-import { ScrollView } from '../components';
+import { ScrollView, Text } from '../components';
 import { RootStackScreenProps } from '../types';
+import { RootState } from '../store';
 
-const USER_LIST = Array.from({ length: 20 }, (_, i) => {
-  const userNumber = i + 1;
-  return {
-    id: `${userNumber}`,
-    firstName: 'User',
-    lastName: `${userNumber}`,
-    isActive: userNumber % 3 !== 0
-  };
-});
+const UserListScreen = ({ navigation, route }: RootStackScreenProps<'UserListScreen'>) => {
+  const regionId = route?.params?.regionId || null;
+  const users = useSelector((state: RootState) => {
+    if (regionId) return state.customer.customers.filter((x) => x.region === regionId);
+    else return state.customer.customers;
+  });
 
-const UserListScreen = ({ navigation }: RootStackScreenProps<'UserListScreen'>) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {USER_LIST.map((user, index) => (
-        <TouchableHighlight
-          key={`${user.id}-${index}`}
-          underlayColor={Theme.colors.white}
-          style={styles.touchable}
-          onPress={() => navigation.navigate('UserDetailsScreen', { userId: user.id })}
-        >
-          <Card
-            style={[
-              styles.userCard,
-              {
-                backgroundColor: user.isActive ? Theme.colors.secondary : Theme.colors.darkGrey
-              }
-            ]}
+      {users && users.length > 0 ? (
+        users.map((user, index) => (
+          <TouchableHighlight
+            key={`${user.id}-${index}`}
+            underlayColor={Theme.colors.white}
+            style={styles.touchable}
+            onPress={() => navigation.navigate('UserDetailsScreen', { userId: user.id })}
           >
-            <Card.Content>
-              <Title style={styles.text}>{`${user.firstName} ${user.lastName}`}</Title>
-              <Paragraph style={styles.text}>status: {user.isActive ? 'active' : 'inactive'}</Paragraph>
-            </Card.Content>
-          </Card>
-        </TouchableHighlight>
-      ))}
+            <Card
+              style={[
+                styles.userCard,
+                {
+                  backgroundColor: user.isActive ? Theme.colors.secondary : Theme.colors.darkGrey
+                }
+              ]}
+            >
+              <Card.Content>
+                <Title style={styles.text}>{`${user.firstName} ${user.lastName}`}</Title>
+                <Paragraph style={styles.text}>status: {user.isActive ? 'active' : 'inactive'}</Paragraph>
+              </Card.Content>
+            </Card>
+          </TouchableHighlight>
+        ))
+      ) : (
+        <Text>No customers in this region.</Text>
+      )}
     </ScrollView>
   );
 };
