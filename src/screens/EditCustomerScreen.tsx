@@ -9,9 +9,9 @@ import { RootState } from '../store';
 import { ScrollView, Input, View, Button, Text } from '../components';
 import { saveCustomer } from '../features/customer/actions';
 
-const EditUserScreen = ({ navigation, route }: RootStackScreenProps<'EditUserScreen'>) => {
+const EditCustomerScreen = ({ navigation, route }: RootStackScreenProps<'EditCustomerScreen'>) => {
   const dispatch = useDispatch();
-  const customerId = route?.params?.userId || null;
+  const customerId = route?.params?.customerId || null;
 
   const regions = useSelector((state: RootState) => state.region.regions);
   const customer = customerId
@@ -118,7 +118,7 @@ const EditUserScreen = ({ navigation, route }: RootStackScreenProps<'EditUserScr
   );
 };
 
-export default EditUserScreen;
+export default EditCustomerScreen;
 
 const styles = StyleSheet.create({
   container: {

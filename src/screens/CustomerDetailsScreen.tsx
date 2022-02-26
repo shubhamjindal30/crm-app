@@ -5,8 +5,8 @@ import { RootState } from '../store';
 import { Button, ScrollView, Text } from '../components';
 import { RootStackScreenProps } from '../types';
 
-const UserDetailsScreen = ({ navigation, route }: RootStackScreenProps<'UserDetailsScreen'>) => {
-  const customerId = route?.params?.userId || null;
+const CustomerDetailsScreen = ({ navigation, route }: RootStackScreenProps<'CustomerDetailsScreen'>) => {
+  const customerId = route?.params?.customerId || null;
 
   const customer = customerId
     ? useSelector((state: RootState) => state.customer.customers.find((x) => x.id === customerId))
@@ -24,8 +24,8 @@ const UserDetailsScreen = ({ navigation, route }: RootStackScreenProps<'UserDeta
           <Text>Last Name: {customer.lastName}</Text>
           <Text>Region: {region ? region.name : ''}</Text>
           <Text>Status: {customer.isActive ? 'Active' : 'Inactive'}</Text>
-          <Button mode="contained" onPress={() => navigation.navigate('EditUserScreen', { userId: customer.id })}>
-            Edit User
+          <Button mode="contained" onPress={() => navigation.navigate('EditCustomerScreen', { customerId: customer.id })}>
+            Edit Customer
           </Button>
         </>
       ) : (
@@ -35,7 +35,7 @@ const UserDetailsScreen = ({ navigation, route }: RootStackScreenProps<'UserDeta
   );
 };
 
-export default UserDetailsScreen;
+export default CustomerDetailsScreen;
 
 const styles = StyleSheet.create({
   container: {

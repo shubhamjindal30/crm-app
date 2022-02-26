@@ -1,17 +1,17 @@
-import EditUserScreen from '../screens/EditUserScreen';
+import EditCustomerScreen from '../screens/EditCustomerScreen';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import RegionListScreen from '../screens/RegionListScreen';
-import UserDetailsScreen from '../screens/UserDetailsScreen';
-import UserListScreen from '../screens/UserListScreen';
+import CustomerDetailsScreen from '../screens/CustomerDetailsScreen';
+import CustomerListScreen from '../screens/CustomerListScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 
 export {
-  EditUserScreen,
+  EditCustomerScreen,
   ModalScreen,
   NotFoundScreen,
   RegionListScreen,
-  UserDetailsScreen,
-  UserListScreen,
+  CustomerDetailsScreen,
+  CustomerListScreen,
   WelcomeScreen
 };

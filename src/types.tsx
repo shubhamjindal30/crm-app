@@ -14,9 +14,9 @@ declare global {
 export type RootStackParamList = {
   WelcomeScreen: undefined;
   RegionListScreen: undefined;
-  UserListScreen: { regionId?: string } | undefined;
-  UserDetailsScreen: { userId?: string } | undefined;
-  EditUserScreen: { userId?: string } | undefined;
+  CustomerListScreen: { regionId?: string } | undefined;
+  CustomerDetailsScreen: { customerId?: string } | undefined;
+  EditCustomerScreen: { customerId?: string } | undefined;
   Modal: undefined;
   NotFound: undefined;
 };

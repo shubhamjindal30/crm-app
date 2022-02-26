@@ -15,8 +15,8 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       WelcomeScreen: 'welcome',
       RegionListScreen: 'regions',
-      UserListScreen: 'users',
-      UserDetailsScreen: 'user',
+      CustomerListScreen: 'customers',
+      CustomerDetailsScreen: 'customer',
       Modal: 'modal',
       NotFound: '*',
     },

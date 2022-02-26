@@ -7,34 +7,34 @@ import { ScrollView, Text } from '../components';
 import { RootStackScreenProps } from '../types';
 import { RootState } from '../store';
 
-const UserListScreen = ({ navigation, route }: RootStackScreenProps<'UserListScreen'>) => {
+const CustomerListScreen = ({ navigation, route }: RootStackScreenProps<'CustomerListScreen'>) => {
   const regionId = route?.params?.regionId || null;
-  const users = useSelector((state: RootState) => {
+  const customers = useSelector((state: RootState) => {
     if (regionId) return state.customer.customers.filter((x) => x.region === regionId);
     else return state.customer.customers;
   });
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {users && users.length > 0 ? (
-        users.map((user, index) => (
+      {customers && customers.length > 0 ? (
+        customers.map((customer, index) => (
           <TouchableHighlight
-            key={`${user.id}-${index}`}
+            key={`${customer.id}-${index}`}
             underlayColor={Theme.colors.white}
             style={styles.touchable}
-            onPress={() => navigation.navigate('UserDetailsScreen', { userId: user.id })}
+            onPress={() => navigation.navigate('CustomerDetailsScreen', { customerId: customer.id })}
           >
             <Card
               style={[
-                styles.userCard,
+                styles.customerCard,
                 {
-                  backgroundColor: user.isActive ? Theme.colors.secondary : Theme.colors.darkGrey
+                  backgroundColor: customer.isActive ? Theme.colors.secondary : Theme.colors.darkGrey
                 }
               ]}
             >
               <Card.Content>
-                <Title style={styles.text}>{`${user.firstName} ${user.lastName}`}</Title>
-                <Paragraph style={styles.text}>status: {user.isActive ? 'active' : 'inactive'}</Paragraph>
+                <Title style={styles.text}>{`${customer.firstName} ${customer.lastName}`}</Title>
+                <Paragraph style={styles.text}>status: {customer.isActive ? 'active' : 'inactive'}</Paragraph>
               </Card.Content>
             </Card>
           </TouchableHighlight>
@@ -46,7 +46,7 @@ const UserListScreen = ({ navigation, route }: RootStackScreenProps<'UserListScr
   );
 };
 
-export default UserListScreen;
+export default CustomerListScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 15
   },
-  userCard: {
+  customerCard: {
     width: '100%',
     justifyContent: 'center',
     paddingLeft: 10,

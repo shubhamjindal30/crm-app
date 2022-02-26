@@ -18,7 +18,7 @@ const RegionListScreen = ({ navigation }: RootStackScreenProps<'RegionListScreen
           mode="contained"
           color={Theme.colors.secondary}
           onPress={() =>
-            navigation.navigate('UserListScreen', {
+            navigation.navigate('CustomerListScreen', {
               regionId: region.id
             })
           }
@@ -26,8 +26,8 @@ const RegionListScreen = ({ navigation }: RootStackScreenProps<'RegionListScreen
           {region.name}
         </Button>
       ))}
-      <Button mode="contained" onPress={() => navigation.navigate('EditUserScreen')}>
-        Create User
+      <Button mode="contained" onPress={() => navigation.navigate('EditCustomerScreen')}>
+        Create Customer
       </Button>
     </View>
   );

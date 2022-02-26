@@ -29,13 +29,13 @@ function* handleSaveCustomer(action: SaveCustomerAction) {
   }
 }
 
-function* handleDeleteUsers() {
+function* handleDeleteCustomers() {
   try {
     const response: boolean = yield call(deleteCustomers);
     if (!response) throw new Error();
     yield put(setCustomers([]));
   } catch (error) {
-    console.log(`Error in handleDeleteUsers: ${error}`);
+    console.log(`Error in handleDeleteCustomers: ${error}`);
     Alert.alert('Error', 'There was an error in clearing the storage. Please try again.');
   }
 }
@@ -44,6 +44,6 @@ export function* watchCustomerRequests() {
   yield all([
     takeLatest(GET_CUSTOMERS, handleGetCustomers),
     takeLatest(SAVE_CUSTOMER, handleSaveCustomer),
-    takeLatest(DELETE_CUSTOMERS, handleDeleteUsers)
+    takeLatest(DELETE_CUSTOMERS, handleDeleteCustomers)
   ]);
 }

@@ -8,12 +8,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ColorSchemeName } from 'react-native';
 
 import {
-  EditUserScreen,
+  EditCustomerScreen,
   ModalScreen,
   NotFoundScreen,
   RegionListScreen,
-  UserDetailsScreen,
-  UserListScreen,
+  CustomerDetailsScreen,
+  CustomerListScreen,
   WelcomeScreen
 } from '../screens';
 import { RootStackParamList } from '../types';
@@ -42,15 +42,15 @@ const RootNavigator = () => {
         component={RegionListScreen}
         options={{ headerShown: true, title: 'Regions' }}
       />
-      <Stack.Screen name="UserListScreen" component={UserListScreen} options={{ headerShown: true, title: 'Users' }} />
+      <Stack.Screen name="CustomerListScreen" component={CustomerListScreen} options={{ headerShown: true, title: 'Customers' }} />
       <Stack.Screen
-        name="UserDetailsScreen"
-        component={UserDetailsScreen}
-        options={{ headerShown: true, title: 'User Details' }}
+        name="CustomerDetailsScreen"
+        component={CustomerDetailsScreen}
+        options={{ headerShown: true, title: 'Customer Details' }}
       />
       <Stack.Screen
-        name="EditUserScreen"
-        component={EditUserScreen}
+        name="EditCustomerScreen"
+        component={EditCustomerScreen}
         options={{ headerShown: true, title: '' }}
       />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
