@@ -1,50 +1,27 @@
-import { useRef, useState } from 'react';
-import { Keyboard, StyleSheet } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Keyboard, StyleSheet, Button as DefaultButton, Alert } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch } from 'react-native-paper';
 
 import { Theme } from '../constants';
 import { RootStackScreenProps } from '../types';
+import { RootState } from '../store';
 import { ScrollView, Input, View, Button, Text } from '../components';
+import { saveCustomer } from '../features/customer/actions';
 
-const REGION_LIST = [
-  {
-    id: '1',
-    name: 'North West'
-  },
-  {
-    id: '2',
-    name: 'Mid West'
-  },
-  {
-    id: '3',
-    name: 'North East'
-  },
-  {
-    id: '4',
-    name: 'South East'
-  },
-  {
-    id: '5',
-    name: 'South West'
-  }
-];
+const EditUserScreen = ({ navigation, route }: RootStackScreenProps<'EditUserScreen'>) => {
+  const dispatch = useDispatch();
+  const customerId = route?.params?.userId || null;
 
-const USER = {
-  id: '1',
-  firstName: 'User',
-  lastName: `1`,
-  region: {
-    id: '1',
-    name: 'North West'
-  },
-  isActive: true
-};
+  const regions = useSelector((state: RootState) => state.region.regions);
+  const customer = customerId
+    ? useSelector((state: RootState) => state.customer.customers.find((x) => x.id === customerId))
+    : null;
 
-const EditUserScreen = ({}: RootStackScreenProps<'EditUserScreen'>) => {
-  const [firstName, setFirstName] = useState(USER.firstName);
-  const [lastName, setLastName] = useState('');
-  const [status, setStatus] = useState(USER.isActive);
-  const [selectedRegion, setSelectedRegion] = useState(USER.region.id);
+  const [firstName, setFirstName] = useState(customer ? customer.firstName : '');
+  const [lastName, setLastName] = useState(customer ? customer.lastName : '');
+  const [status, setStatus] = useState(customer ? customer.isActive : true);
+  const [selectedRegion, setSelectedRegion] = useState(customer ? customer.region : '');
 
   const [fnamError, setFnameError] = useState('');
   const [lnamError, setLnameError] = useState('');
@@ -52,10 +29,49 @@ const EditUserScreen = ({}: RootStackScreenProps<'EditUserScreen'>) => {
   const fnameRef = useRef<HTMLInputElement>();
   const lnameRef = useRef<HTMLInputElement>();
 
+  const handleSave = () => {
+    Keyboard.dismiss();
+
+    if (!firstName) {
+      setFnameError('First name cannot be empty!');
+      fnameRef.current?.focus();
+      return;
+    }
+
+    if (!lastName) {
+      setLnameError('Last name cannot be empty!');
+      lnameRef.current?.focus();
+      return;
+    }
+
+    if (!selectedRegion) {
+      Alert.alert('Please select a region!');
+    }
+
+    dispatch(
+      saveCustomer({
+        id: customerId || '',
+        firstName,
+        lastName,
+        isActive: status,
+        region: selectedRegion
+      })
+    );
+
+    navigation.goBack();
+
+  };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <DefaultButton title="Save" onPress={handleSave} />
+    });
+  }, [handleSave]);
+
   const handleFirstNameChange = (fname: string) => setFirstName(fname);
   const handleLastNameChange = (lname: string) => setLastName(lname);
   const handleStatusChange = () => setStatus(!status);
-  
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Input
@@ -64,6 +80,7 @@ const EditUserScreen = ({}: RootStackScreenProps<'EditUserScreen'>) => {
         value={firstName}
         returnKeyType="next"
         autoCapitalize="words"
+        autoFocus={true}
         autoComplete={false}
         onChange={() => setFnameError('')}
         onChangeText={handleFirstNameChange}
@@ -86,7 +103,7 @@ const EditUserScreen = ({}: RootStackScreenProps<'EditUserScreen'>) => {
         <Switch color={Theme.colors.secondary} value={status} onValueChange={handleStatusChange} />
       </View>
       <Text style={[styles.headings, styles.regionHeadline]}>Select Region</Text>
-      {REGION_LIST.map((region, index) => (
+      {regions && regions.map((region, index) => (
         <Button
           style={styles.regionBtn}
           key={`${region.id}-${index}`}

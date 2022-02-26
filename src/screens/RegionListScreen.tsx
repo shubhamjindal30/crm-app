@@ -26,7 +26,7 @@ const RegionListScreen = ({ navigation }: RootStackScreenProps<'RegionListScreen
           {region.name}
         </Button>
       ))}
-      <Button mode="contained" onPress={() => {}}>
+      <Button mode="contained" onPress={() => navigation.navigate('EditUserScreen')}>
         Create User
       </Button>
     </View>
