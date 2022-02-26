@@ -1,4 +1,4 @@
-import { timeout } from '../../utils';
+import { timeout } from '../../utilities';
 import { regions } from '../DATA';
 import { Region } from './types';
 

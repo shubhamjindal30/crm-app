@@ -4,6 +4,7 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { setCustomers } from './actions';
 import { getCustomers, saveCustomer, deleteCustomers } from './services';
 import { GET_CUSTOMERS, SAVE_CUSTOMER, DELETE_CUSTOMERS, Customer, SaveCustomerAction } from './types';
+import { schedulePushNotification } from '../../utilities/notifications';
 
 function* handleGetCustomers() {
   try {
@@ -18,10 +19,18 @@ function* handleGetCustomers() {
 
 function* handleSaveCustomer(action: SaveCustomerAction) {
   try {
-    const response: { data: Customer[] | null } = yield call(saveCustomer, action.payload);
+    const customer = action.payload;
+    const response: { data: Customer[] | null } = yield call(saveCustomer, customer);
     const { data } = response;
     if (data) {
+      yield call(
+        schedulePushNotification,
+        'Contact Customer',
+        `Don't forget to contact ${customer.firstName} ${customer.lastName}!`,
+        5
+      );
       yield put(setCustomers(data));
+      Alert.alert('Success', `Customer ${customer.firstName} ${customer.lastName} successfully created!`);
     }
   } catch (error) {
     console.log(`Error in handleSaveCustomer: ${error}`);
@@ -34,6 +43,7 @@ function* handleDeleteCustomers() {
     const response: boolean = yield call(deleteCustomers);
     if (!response) throw new Error();
     yield put(setCustomers([]));
+    Alert.alert('Success', 'Storage cleared!');
   } catch (error) {
     console.log(`Error in handleDeleteCustomers: ${error}`);
     Alert.alert('Error', 'There was an error in clearing the storage. Please try again.');
