@@ -30,15 +30,17 @@ const EditCustomerScreen = ({ navigation, route }: RootStackScreenProps<'EditCus
   const lnameRef = useRef<HTMLInputElement>();
 
   const handleSave = () => {
+    const fname = firstName.trim();
+    const lname = lastName.trim();
     Keyboard.dismiss();
 
-    if (!firstName) {
+    if (!fname) {
       setFnameError('First name cannot be empty!');
       fnameRef.current?.focus();
       return;
     }
 
-    if (!lastName) {
+    if (!lname) {
       setLnameError('Last name cannot be empty!');
       lnameRef.current?.focus();
       return;
@@ -51,8 +53,8 @@ const EditCustomerScreen = ({ navigation, route }: RootStackScreenProps<'EditCus
     dispatch(
       saveCustomer({
         id: customerId || '',
-        firstName,
-        lastName,
+        firstName: fname,
+        lastName: lname,
         isActive: status,
         region: selectedRegion
       })
