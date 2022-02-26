@@ -1,29 +1,36 @@
 import { StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
+import { RootState } from '../store';
 import { Button, ScrollView, Text } from '../components';
 import { RootStackScreenProps } from '../types';
 
-const USER = {
-  id: '1',
-  firstName: 'User',
-  lastName: `1`,
-  region: {
-    id: '1',
-    name: 'North West'
-  },
-  isActive: true
-};
+const UserDetailsScreen = ({ navigation, route }: RootStackScreenProps<'UserDetailsScreen'>) => {
+  const customerId = route?.params?.userId || null;
 
-const UserDetailsScreen = ({ navigation }: RootStackScreenProps<'UserDetailsScreen'>) => {
+  const customer = customerId
+    ? useSelector((state: RootState) => state.customer.customers.find((x) => x.id === customerId))
+    : null;
+
+  const region = customer
+    ? useSelector((state: RootState) => state.region.regions.find((x) => x.id === customer.region))
+    : null;
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text>First Name: {USER.firstName}</Text>
-      <Text>Last Name: {USER.lastName}</Text>
-      <Text>Region: {USER.region.name}</Text>
-      <Text>Status: {USER.isActive ? 'Active' : 'Inactive'}</Text>
-      <Button mode="contained" onPress={() => navigation.navigate('EditUserScreen', { userId: USER.id })}>
-        Edit User
-      </Button>
+      {customer ? (
+        <>
+          <Text>First Name: {customer.firstName}</Text>
+          <Text>Last Name: {customer.lastName}</Text>
+          <Text>Region: {region ? region.name : ''}</Text>
+          <Text>Status: {customer.isActive ? 'Active' : 'Inactive'}</Text>
+          <Button mode="contained" onPress={() => navigation.navigate('EditUserScreen', { userId: customer.id })}>
+            Edit User
+          </Button>
+        </>
+      ) : (
+        <Text>Customer not found!</Text>
+      )}
     </ScrollView>
   );
 };
