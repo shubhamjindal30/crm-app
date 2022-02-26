@@ -37,4 +37,14 @@ const saveCustomer = async (customer: Customer) => {
   }
 };
 
-export { getCustomers, saveCustomer };
+const deleteCustomers = async () => {
+  try {
+    await AsyncStorage.removeItem('customers');
+    return true;
+  } catch (error) {
+    console.log(`Error in deleteCustomers: ${error}`);
+    return false;
+  }
+};
+
+export { getCustomers, saveCustomer, deleteCustomers };

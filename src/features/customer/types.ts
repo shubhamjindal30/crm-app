@@ -1,6 +1,7 @@
 export const GET_CUSTOMERS = 'GET_CUSTOMERS';
 export const SAVE_CUSTOMER = 'SAVE_CUSTOMER';
 export const SET_CUSTOMERS = 'SET_CUSTOMERS';
+export const DELETE_CUSTOMERS = 'DELETE_CUSTOMERS';
 
 export interface Customer {
   id: string;
@@ -24,4 +25,8 @@ export interface SetCustomersAction {
   payload: Customer[];
 }
 
-export type CustomerActionType = GetCustomersAction | SaveCustomerAction | SetCustomersAction;
+export interface DeleteCustomersAction {
+  type: typeof DELETE_CUSTOMERS;
+}
+
+export type CustomerActionType = GetCustomersAction | SaveCustomerAction | SetCustomersAction | DeleteCustomersAction;

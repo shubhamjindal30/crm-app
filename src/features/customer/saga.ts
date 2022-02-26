@@ -1,8 +1,9 @@
+import { Alert } from 'react-native';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { setCustomers } from './actions';
-import { getCustomers, saveCustomer } from './services';
-import { GET_CUSTOMERS, SAVE_CUSTOMER, Customer, SaveCustomerAction } from './types';
+import { getCustomers, saveCustomer, deleteCustomers } from './services';
+import { GET_CUSTOMERS, SAVE_CUSTOMER, DELETE_CUSTOMERS, Customer, SaveCustomerAction } from './types';
 
 function* handleGetCustomers() {
   try {
@@ -10,7 +11,7 @@ function* handleGetCustomers() {
     const { data } = response;
     yield put(setCustomers(data));
   } catch (error) {
-    console.log(`Error in handleGetRegions: ${error}`);
+    console.log(`Error in handleGetCustomers: ${error}`);
     yield put(setCustomers([]));
   }
 }
@@ -24,9 +25,25 @@ function* handleSaveCustomer(action: SaveCustomerAction) {
     }
   } catch (error) {
     console.log(`Error in handleSaveCustomer: ${error}`);
+    Alert.alert('Error', 'There was an error in saving the customer. Please try again.');
+  }
+}
+
+function* handleDeleteUsers() {
+  try {
+    const response: boolean = yield call(deleteCustomers);
+    if (!response) throw new Error();
+    yield put(setCustomers([]));
+  } catch (error) {
+    console.log(`Error in handleDeleteUsers: ${error}`);
+    Alert.alert('Error', 'There was an error in clearing the storage. Please try again.');
   }
 }
 
 export function* watchCustomerRequests() {
-  yield all([takeLatest(GET_CUSTOMERS, handleGetCustomers), takeLatest(SAVE_CUSTOMER, handleSaveCustomer)]);
+  yield all([
+    takeLatest(GET_CUSTOMERS, handleGetCustomers),
+    takeLatest(SAVE_CUSTOMER, handleSaveCustomer),
+    takeLatest(DELETE_CUSTOMERS, handleDeleteUsers)
+  ]);
 }

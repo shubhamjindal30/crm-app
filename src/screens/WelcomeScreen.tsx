@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Text, View, Button } from '../components';
 import { RootStackScreenProps } from '../types';
-import { getCustomers } from '../features/customer/actions';
+import { deleteCustomers, getCustomers } from '../features/customer/actions';
 import { getRegions } from '../features/region/actions';
 
 const WelcomeScreen = ({ navigation }: RootStackScreenProps<'WelcomeScreen'>) => {
@@ -20,9 +19,8 @@ const WelcomeScreen = ({ navigation }: RootStackScreenProps<'WelcomeScreen'>) =>
     navigation.navigate('RegionListScreen');
   };
 
-  const handleClearStorage = async () => {
-    await AsyncStorage.removeItem('customers');
-  };
+  const handleClearStorage = async () => dispatch(deleteCustomers());
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to CRM plus</Text>
