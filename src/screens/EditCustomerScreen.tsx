@@ -82,7 +82,7 @@ const EditCustomerScreen = ({ navigation, route }: RootStackScreenProps<'EditCus
         value={firstName}
         returnKeyType="next"
         autoCapitalize="words"
-        autoFocus={true}
+        autoFocus={!customerId ? true : false}
         autoComplete={false}
         onChange={() => setFnameError('')}
         onChangeText={handleFirstNameChange}
