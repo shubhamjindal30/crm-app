@@ -9,7 +9,6 @@ import { ColorSchemeName } from 'react-native';
 
 import {
   EditCustomerScreen,
-  ModalScreen,
   NotFoundScreen,
   RegionListScreen,
   CustomerDetailsScreen,
@@ -54,9 +53,6 @@ const RootNavigator = () => {
         options={{ headerShown: true, title: '' }}
       />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
     </Stack.Navigator>
   );
 };
