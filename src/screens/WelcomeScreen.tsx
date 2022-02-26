@@ -23,7 +23,7 @@ const WelcomeScreen = ({ navigation }: RootStackScreenProps<'WelcomeScreen'>) =>
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to CRM plus</Text>
+      <Text style={styles.title}>Welcome to CRM Plus</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Button mode="contained" onPress={handleContinue}>
         Continue
